@@ -70,13 +70,13 @@ export default function FavListView(props: { state: AppState, dispatch: React.Di
   const handleClose = () => setDialogID(-1)
   const handleRemove = () => { remove(); setDialogID(-1); }
   const dialogDelete = (<Dialog open={dialogID >= 0} onClose={handleClose} >
-    <DialogTitle id="alert-dialog-title">{"Delete this alg from favorites?"}</DialogTitle>
+    <DialogTitle id="alert-dialog-title">{"要从收藏中删除这条解法吗？"}</DialogTitle>
     <DialogActions>
       <Button onClick={handleClose} color="primary">
-        No
+        否
     </Button>
       <Button onClick={handleRemove} color="primary" autoFocus>
-        Yes
+        是
     </Button>
     </DialogActions>
   </Dialog>)
@@ -96,11 +96,11 @@ export default function FavListView(props: { state: AppState, dispatch: React.Di
     setAddString(event.target.value)
   }
   const dialogAdd = <Dialog open={addDialogOpen} onClose={handleAddClose} aria-labelledby="form-dialog-title">
-    <DialogTitle id="form-dialog-title">Add New Cases</DialogTitle>
+    <DialogTitle id="form-dialog-title">添加新 Case</DialogTitle>
     <DialogContent>
       <DialogContentText>
-        Input your cases here. (one per line) <br></br>
-        Format: [category], [setup algorithm].
+        在这里输入你的 case，每行一条。<br></br>
+        格式：[分类], [setup 公式]。
         category := fb | fbdr | ss-front | ss-back
       </DialogContentText>
       <TextField
@@ -115,10 +115,10 @@ export default function FavListView(props: { state: AppState, dispatch: React.Di
     </DialogContent>
     <DialogActions>
       <Button onClick={handleAddClose} color="primary">
-        Cancel
+        取消
     </Button>
       <Button onClick={handleAddSuccess} color="primary">
-        Add All
+        全部添加
     </Button>
     </DialogActions>
   </Dialog>
@@ -132,7 +132,7 @@ export default function FavListView(props: { state: AppState, dispatch: React.Di
       <Table className={classes.table} size="small" >
         <TableHead>
           <TableRow>
-            <TableCell align="center"> Scramble </TableCell>
+            <TableCell align="center"> 打乱 </TableCell>
             <TableCell align="center" rowSpan={1}>
               <IconButton   onClick={handleAdd} component="span" edge="end" size="small" color="primary">
                 <AddIcon />

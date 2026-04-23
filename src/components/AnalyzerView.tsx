@@ -151,6 +151,12 @@ const useStyles = makeStyles(theme => ({
       minWidth: 80,
       maxWidth: 160,
     },
+    formControlWide: {
+      margin: theme.spacing(0),
+      minWidth: 280,
+      maxWidth: 420,
+      width: "min(420px, calc(100vw - 64px))",
+    },
     menu: {
         '& .MuiMenuItem-root': {
             whiteSpace: 'nowrap',
@@ -169,6 +175,15 @@ const resetState = (state: AnalyzerState) => {
     stage: "fb"
   }
 }
+
+const fbStageDisplayNames: Record<fbStageT, string> = {
+  "fb": "完整左桥 (1x2x3) (FB)",
+  "fs": "左桥方形块 (1x2x2) (FS)",
+  "pseudo-fs": "伪方形块 (Pseudo) (Pseudo FS)",
+  "felinep1": "底棱长条 + 1块 (E-Line+1)",
+  "fs-combo": "方形块 / 底棱长条 (最优判定) (FS/Line)"
+}
+
 function ScrambleView(props: { state: AnalyzerState, setState: (newState: AnalyzerState) => void }) {
     let { state, setState } = props
     let classes = useStyles()
@@ -201,7 +216,7 @@ function ScrambleView(props: { state: AnalyzerState, setState: (newState: Analyz
           fullWidth
           multiline
           maxRows={3}
-          label={"Scramble"}
+          label={"打乱"}
           value={value}
           onChange={onScrambleChange}
           variant="filled"
@@ -214,11 +229,11 @@ function ScrambleView(props: { state: AnalyzerState, setState: (newState: Analyz
       <Box sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', gap: isSmallScreen ? 0.5 : 0.5, alignItems: 'stretch' }}>
         <Button onFocus={(evt) => evt.target.blur() } onClick={handleGen}
               size="medium" variant="contained" color="primary" >
-                Gen
+                生成
         </Button>
         <Button onFocus={(evt) => evt.target.blur() } onClick={handleBegin}
               size="medium" variant="contained" color="primary" >
-                GO
+                开始
         </Button>
       </Box>
     </Box> )
@@ -238,6 +253,26 @@ function ConfigView(props: { state: AnalyzerState, setState: (newState: Analyzer
   };
 
   const selectSx = { fontSize: "1.0rem" };
+  const wideMenuProps = {
+    PaperProps: {
+        style: {
+            maxWidth: 420,
+            width: 420,
+        },
+    },
+  };
+  const fbStageSelectSx = {
+    ...selectSx,
+    '& .MuiSelect-select': {
+      whiteSpace: 'normal',
+      lineHeight: 1.35,
+    },
+  };
+  const fbStageMenuItemStyle: React.CSSProperties = {
+    whiteSpace: 'normal',
+    lineHeight: 1.35,
+    maxWidth: 420,
+  };
 
   let fb_ori_str = state.orientation + "," + state.pre_orientation
   let handleFBOri = (event: SelectChangeEvent<String>) => {
@@ -265,7 +300,7 @@ function ConfigView(props: { state: AnalyzerState, setState: (newState: Analyzer
   <Box display="flex" flexWrap="wrap" gap={0} sx={{ rowGap: 2}}>
     <Box className={classes.configItem}>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-helper-label">FB Orientation</InputLabel>
+        <InputLabel id="demo-simple-select-helper-label">FB 朝向</InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
@@ -274,17 +309,17 @@ function ConfigView(props: { state: AnalyzerState, setState: (newState: Analyzer
           MenuProps={menuProps}
           sx={selectSx}
         >
-          <MenuItem value={"x2y,"}>x2y on W/Y</MenuItem>
-          <MenuItem value={"x2y,x"}>x2y on B/G</MenuItem>
-          <MenuItem value={"x2y,z"}>x2y on R/O</MenuItem>
-          <MenuItem value={"cn,"}>Color Neutral</MenuItem>
+          <MenuItem value={"x2y,"}>x2y 在 W/Y</MenuItem>
+          <MenuItem value={"x2y,x"}>x2y 在 B/G</MenuItem>
+          <MenuItem value={"x2y,z"}>x2y 在 R/O</MenuItem>
+          <MenuItem value={"cn,"}>全色中立</MenuItem>
         </Select>
         <FormHelperText></FormHelperText>
       </FormControl>
     </Box>
     <Box className={classes.configItem}>
       <FormControl className={classes.formControl}>
-      <InputLabel id="demo-simple-select-helper-label">Organize</InputLabel>
+      <InputLabel id="demo-simple-select-helper-label">排列方式</InputLabel>
       <Select
         labelId="demo-simple-select-helper-label"
         id="demo-simple-select-helper"
@@ -293,15 +328,15 @@ function ConfigView(props: { state: AnalyzerState, setState: (newState: Analyzer
         MenuProps={menuProps}
         sx={selectSx}
       >
-        <MenuItem value={"foreach"}>By FB</MenuItem>
-        <MenuItem value={"combined"}>Combined </MenuItem>
+        <MenuItem value={"foreach"}>按 FB 分组</MenuItem>
+        <MenuItem value={"combined"}>合并显示</MenuItem>
       </Select>
       <FormHelperText></FormHelperText>
      </FormControl>
     </Box>
     <Box  className={classes.configItem}>
     <FormControl className={classes.formControl}>
-      <InputLabel id="demo-simple-select-helper-label"># Solutions</InputLabel>
+      <InputLabel id="demo-simple-select-helper-label">解法数量</InputLabel>
       <Select
         labelId="demo-simple-select-helper-label"
         id="demo-simple-select-helper"
@@ -320,28 +355,28 @@ function ConfigView(props: { state: AnalyzerState, setState: (newState: Analyzer
     </FormControl>
     </Box>
     <Box  className={classes.configItem}>
-    <FormControl className={classes.formControl}>
-      <InputLabel id="demo-simple-select-helper-label">FB Stage</InputLabel>
+    <FormControl className={classes.formControlWide}>
+      <InputLabel id="demo-simple-select-helper-label">FB 阶段</InputLabel>
       <Select
         labelId="demo-simple-select-helper-label"
         id="demo-simple-select-helper"
         value={state.fb_stage}
         onChange={handle_fb_stage}
-        MenuProps={menuProps}
-        sx={selectSx}
+        MenuProps={wideMenuProps}
+        sx={fbStageSelectSx}
       >
-        <MenuItem value={"fb"}>FB</MenuItem>
-        <MenuItem value={"fs"}>FS</MenuItem>
-        <MenuItem value={"pseudo-fs"}>Pseudo FS</MenuItem>
-        <MenuItem value={"felinep1"}>E-Line+1</MenuItem>
-        <MenuItem value={"fs-combo"}>FS/Line</MenuItem>
+        <MenuItem value={"fb"} style={fbStageMenuItemStyle}>{fbStageDisplayNames["fb"]}</MenuItem>
+        <MenuItem value={"fs"} style={fbStageMenuItemStyle}>{fbStageDisplayNames["fs"]}</MenuItem>
+        <MenuItem value={"pseudo-fs"} style={fbStageMenuItemStyle}>{fbStageDisplayNames["pseudo-fs"]}</MenuItem>
+        <MenuItem value={"felinep1"} style={fbStageMenuItemStyle}>{fbStageDisplayNames["felinep1"]}</MenuItem>
+        <MenuItem value={"fs-combo"} style={fbStageMenuItemStyle}>{fbStageDisplayNames["fs-combo"]}</MenuItem>
       </Select>
       <FormHelperText></FormHelperText>
     </FormControl>
     </Box>
     <Box className={classes.configItem}>
       <FormControl className={classes.formControl}>
-        <InputLabel id="hide-solutions-label">Hints?</InputLabel>
+        <InputLabel id="hide-solutions-label">提示模式</InputLabel>
         <Select
           labelId="hide-solutions-label"
           id="hide-solutions-select"
@@ -350,8 +385,8 @@ function ConfigView(props: { state: AnalyzerState, setState: (newState: Analyzer
           MenuProps={menuProps}
           sx={selectSx}
         >
-          <MenuItem value={"true"}>Yes</MenuItem>
-          <MenuItem value={"false"}>No</MenuItem>
+          <MenuItem value={"true"}>是</MenuItem>
+          <MenuItem value={"false"}>否</MenuItem>
         </Select>
         <FormHelperText></FormHelperText>
       </FormControl>
@@ -390,7 +425,7 @@ function SolutionInputView(props: { state: AnalyzerState, setState: (newState: A
 
               startIcon={<EditIcon />}
           >
-              {"Input Your Solution"}
+              {"输入你的解法"}
           </Button>
     </Box>
 
@@ -400,7 +435,7 @@ function SolutionInputView(props: { state: AnalyzerState, setState: (newState: A
             maxWidth="sm"
             fullWidth
             >
-          <DialogTitle> Input your reconstructed solution </DialogTitle>
+          <DialogTitle> 输入你的复盘解法 </DialogTitle>
           <DialogContent>
                 <TextField
                     inputRef={textField}
@@ -417,7 +452,7 @@ function SolutionInputView(props: { state: AnalyzerState, setState: (newState: A
           <DialogActions>
               <Box padding={1}>
               <Button onClick={handleClose} color="primary" variant="outlined" fullWidth >
-                  Confirm
+                  确认
               </Button>
               </Box>
           </DialogActions>
@@ -558,10 +593,10 @@ function StageSolutionListView(props: { solutions: SolutionDesc[], num_to_displa
   const shortest_solutions = solutions.filter(s => s.solution.moves.length === shortest_length)
   //console.log("shortest solutions", shortest_solutions)
   const tag_full_name : Record<string, string> = {
-    "FS": "FS",
-    "FB": "FB",
-    "Ps": "Pseudo FS",
-    "Line": "E-Line + 1c"
+    "FS": "左桥方形块 (1x2x2) (FS)",
+    "FB": "完整左桥 (1x2x3) (FB)",
+    "Ps": "伪方形块 (Pseudo) (Pseudo FS)",
+    "Line": "底棱长条 + 1块 (E-Line+1)"
   }
   const shortest_solution_tag_names = shortest_solutions.map(s => ({tag: tag_full_name[s.fb_tag || "FB"], fb_name: get_orientation_fb_colors(s.orientation || "")}))
   const shortest_tag_names = shortest_solution_tag_names.reduce((acc, curr) => {
@@ -579,7 +614,7 @@ function StageSolutionListView(props: { solutions: SolutionDesc[], num_to_displa
       <React.Fragment key={tag}>
         <Box sx={{ width: "100%", mb: 1 }}>
           <Typography variant="body1" color="text.primary" sx={{ fontSize: "1.1rem", textAlign: "center" }} >
-            {`There exists ${shortest_length}-STM ${tag || "solution"} in: `}
+            {`存在 ${shortest_length}-STM ${tag || "解法"}，位置如下：`}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2.0, justifyContent: "center", mb: 2 }}>
@@ -597,7 +632,7 @@ function StageSolutionListView(props: { solutions: SolutionDesc[], num_to_displa
             <Box sx={{ width: "100%" }}>
               {shortest_tag_names_str}
               <Typography variant="body1" color="text.secondary" sx={{ mt: 1, fontSize: "1.0rem", textAlign: "center" }}>
-                (Click to reveal)
+                (点击显示答案)
               </Typography>
             </Box>
           ) : (
@@ -701,7 +736,7 @@ function AnalyzerView(props: { state: AppState, dispatch: React.Dispatch<Action>
           state.full_solution.length >= 1 ? <>
             <Box style={{display: "flex", flexDirection: "column", alignSelf: "flex-start"}}>
               <Box className={classes.title} style={{}}>
-                My Solution
+                我的解法
               </Box>
             </Box>
             <Box style={{}} className={classes.fgap} />
@@ -730,7 +765,7 @@ function AnalyzerView(props: { state: AppState, dispatch: React.Dispatch<Action>
             <Box display="flex" >
                 <Box style={{display: "flex", flexDirection: "column", alignSelf: "flex-start"}}>
                   <Box className={classes.title} style={{}}>
-                    Solutions
+                    解法
                   </Box>
                   <Box>
                   <Button className={classes.title1} size="small" variant="outlined" color="primary">

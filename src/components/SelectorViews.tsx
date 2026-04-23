@@ -104,7 +104,7 @@ function SliderView(props: {
   }
   let label = slider.label
   let marks = React.useMemo(() => {
-    let obj = [{value: slider.l - 1, label: "Any"}]
+    let obj = [{value: slider.l - 1, label: "不限"}]
     for (let i = slider.l; i <= slider.r; i++) {
       let suffix = ""
       if (i === slider.l && slider.extend_l) suffix = "-";
@@ -115,7 +115,7 @@ function SliderView(props: {
   }, [slider.l, slider.r, slider.extend_l, slider.extend_r])
   return (
   <Box>
-    <FormLabel component="legend" className={classes.selectLabel} >Level</FormLabel>
+    <FormLabel component="legend" className={classes.selectLabel} >难度等级</FormLabel>
     <Box paddingX={5}>
       <LevelSlider
       marks={marks}
@@ -193,7 +193,7 @@ function SingleSelect(props: {state: AppState, dispatch: React.Dispatch<Action>,
             key={name}
             value={name}
             control={<Radio color="primary" />}
-            label={name}
+            label={sel.getDisplayName(name)}
             labelPlacement="end"
           />
         ))
@@ -234,7 +234,7 @@ function MultiSelectContent(props: {state: AppState, dispatch: React.Dispatch<Ac
         control={
         <Checkbox color="primary" checked={checked} onChange={handleChange} />
         }
-        label={name}
+        label={sel.getDisplayName(name)}
         key={name}
         value={name}
     />)
@@ -307,7 +307,7 @@ function MultiSelect(props: {state: AppState, dispatch: React.Dispatch<Action>, 
     <Box height={8}/>
     <Button color="primary" variant="outlined" style={{borderWidth: 2}} onClick={handleClickOpen}>
     <SettingsIcon fontSize="small" color="primary" style={{marginLeft: -6, marginRight: 3}}></SettingsIcon>
-      Edit
+      编辑
     </Button>
     <Box height={8}/>
     <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
@@ -317,7 +317,7 @@ function MultiSelect(props: {state: AppState, dispatch: React.Dispatch<Action>, 
       </DialogContent>
       <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Ok
+            确定
           </Button>
       </DialogActions>
     </Dialog>

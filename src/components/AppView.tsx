@@ -69,17 +69,17 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const tab_modes : [Mode, string, string][] = [
-  ["fb", "First Block (Fixed)", "FB (fixed)"],
-  ["analyzer", "First Block Analyzer (x2y | CN)", "FB analyzer (x2y | CN)"],
-  ["fs", "First Block Square", "FB square"],
-  ["fsdr", "First Block Square + DR edge", "FB square + DR"],
-  ["fbdr", "First Block Last Pair (+ DR edge)", "FB last pair (+DR)"],
-  ["fbss", "First Block Last Pair + Second Square", "FB last pair + SS"],
-  ["ss", "Second Block Square", "SB square"],
-  ["cmll", "CMLL", "CMLL"],
+  ["fb", "左桥 (固定朝向)", "左桥 (固定)"],
+  ["analyzer", "左桥分析器 (容差/全底色)", "左桥分析器"],
+  ["fs", "左桥方形块", "左桥方形块"],
+  ["fsdr", "左桥方形块 + 右底棱", "左桥方形块 + 右底棱"],
+  ["fbdr", "左桥最后角棱对 (+ 右底棱)", "左桥最后角棱对"],
+  ["fbss", "左桥最后角棱对 + 右桥方形块", "左桥角棱对 + 右桥方块"],
+  ["ss", "右桥方形块", "右桥方形块"],
+  ["cmll", "CMLL (顶层角块)", "CMLL"],
   //TODO: build this ["misc-algs", "OLLCP", "OLLCP"],
-  ["4c", "LSE 4c", "LSE 4c"],
-  ["eopair", "EOLR / EOLRb", "EOLR(b)"]
+  ["4c", "LSE 4c (最后换棱)", "LSE 4c"],
+  ["eopair", "EOLR / EOLRb (高阶翻棱与归位)", "EOLR(b)"]
   //["tracking", "Tracking Trainer (Beta)", "Tracking"]
 ]
 
@@ -154,8 +154,51 @@ const introText = `# Onionhoney's Roux Trainers
 If you have ideas on how to improve the app just shoot a message and let me know. <3
 `
 
+const zhIntroText = `# Onionhoney 的 Roux 训练器
+- 一个覆盖 Roux 训练需求的训练器集合。
+- 灵感来自 http://cubegrass.appspot.com/，并补上了它缺少的许多功能。
+
+## 支持的模式
+- 左桥分析器
+    - 求解所有 x2y FB，并推荐最适合作为开局的 FB。
+    - 同时推荐最佳 FS / 伪 FS / Line 开局。
+    - 可以作为“你能找到 x 步解吗”的小测验显示，答案点击后揭晓。
+    - 支持更多朝向：CN、蓝/绿 x2y、红/橙 x2y。
+- 左桥最后角棱对 (+ 右底棱) 训练器
+    - 如果你正在练 FB 或 FB + DR，这个模式非常有用。拿一个随机打乱，先自己思考，再对照程序给出的解法。
+    - **注意**：求解器会尽力寻找好解，但仍可能漏掉整体最优解。拿不准时请和真人玩家交流，谨慎选择要练习的解法。
+- 左桥 / 右桥方形块训练器
+    - 可以按块位置指定 case，适合用来观察和理解搭块。
+- CMLL (顶层角块) 训练器
+    - 使用真正随机的 L10P 打乱，因此不能靠打乱判断 case。你可以指定 OCLL，也可以从随机右桥最后角棱对开始，模拟真实识别。
+    - 可以只显示识别所需的贴纸。
+- LSE 训练器 (EOLR, 4c)
+    - 适合复习 EOLR 和练习 4c 识别方法，也可以按 MC / Non-MC case 过滤。
+
+## 快捷键
+- 空格：下一组打乱。
+- Enter：将虚拟魔方重置为当前打乱。
+- 使用 cstimer 键位控制虚拟魔方。
+
+## 功能
+- 打乱均为随机状态。求解器针对 Roux 优化，将 M 和 r 转动作为一等公民处理，最多提供 25 条不同解法。
+- 可以用键盘控制虚拟魔方，也可以拖拽魔方改变观察角度。
+- 可以收藏喜欢的 case，收藏会保存在浏览器中。
+- 可以输入自己的打乱列表，训练器会按顺序逐条使用。
+- 外观支持暗色模式。
+
+---
+
+## 版本日志
+- 此处只显示简要日志，完整版本日志请查看 GitHub 页面：https://github.com/onionhoney/roux-trainers
+
+---
+
+如果你有改进建议，欢迎联系作者。
+`
+
 function Intro() {
-  return <Markdown>{introText}</Markdown>
+  return <Markdown>{zhIntroText || introText}</Markdown>
 }
 
 // TODO: Write getter and setter for config items, and also write handlers that map to setters
@@ -210,7 +253,7 @@ function AppView(props: { state: AppState, dispatch: React.Dispatch<Action> } ) 
       </DialogContent>
       <DialogActions>
         <Button color="primary" onClick={handleInfoClose}>
-          Got it!
+          知道了
         </Button>
       </DialogActions>
       </Dialog>

@@ -74,10 +74,10 @@ export const EOLRMode = {
 }
 
 const fbPieceSolvedAnnotation = `
-Explanation:
-These modes apply different constraints on your FB state.
-[Hard] means there's no free pair AND no edges attached to the L center.
-[Hard over x2y] means it's hard for all FBs over the x2y orientations. To see solutions, paste them into the FB analyzer.`
+说明：
+这些模式会给 FB 状态加入不同约束。
+[困难] 表示没有可直接利用的 pair，并且没有边块连在 L 中心上。
+[x2y 全困难] 表示所有 x2y 朝向下的 FB 都较难。想看解法时，可以把打乱粘贴到 FB 分析器。`
 
 const initialLevels = {
     fbdrLevelSelector: ({
@@ -107,25 +107,29 @@ export const initialConfig : Config = (() => {
     arr_ori_flag[7] = 1 // YR
     return {
         showCube: new Selector({
-            label: "Virtual Cube",
+            label: "虚拟魔方",
             names:["Show", "Hide"],
+            displayNames: ["显示", "隐藏"],
             flags: [1,0],
             kind: "virtual-cube"
         }),
         theme: new Selector({
             names: ["bright", "dark"],
+            displayNames: ["亮色", "暗色"],
             flags: [0, 1],
             kind: "theme"
         }),
         evaluator: new Selector({
-            label: "Solution Sorting Metrics",
+            label: "解法排序指标",
             names: ["Default", "QTM"],
+            displayNames: ["默认", "QTM"],
             flags: [1, 0],
             kind: "evaluator"
         }),
         moveCountHint: new Selector({
-            label: "Show Movecount Hint",
+            label: "显示步数提示",
             names: ["Show", "Hide"],
+            displayNames: ["显示", "隐藏"],
             flags: [1, 0],
             kind: "movecount_hint"
         }),
@@ -147,12 +151,14 @@ export const initialConfig : Config = (() => {
         }),
         cmllAufSelector: new Selector({
             names: ["None", "U", "U'", "U2"],
+            displayNames: ["无", "U", "U'", "U2"],
             flags: [1, 1, 1, 1],
             kind: "u_auf"
         }),
         //TODO: show L face
         cmllCubeMaskSelector: new Selector({
             names: ["Show", "Hide", "Hide LSE"],
+            displayNames: ["显示", "隐藏", "隐藏 LSE"],
             flags: [1, 0, 0],
             kind: "cube_mask"
         }),
@@ -163,6 +169,7 @@ export const initialConfig : Config = (() => {
         }),
         cmll3DFaceSelector: new Selector({
             names: ["Show", "Hide"],
+            displayNames: ["显示", "隐藏"],
             flags: [0, 1],
             kind: "cmll_3d_faces"
         }),
@@ -173,11 +180,13 @@ export const initialConfig : Config = (() => {
         }),
         cmllKataSelector: new Selector({
             names: ["off", "on"],
+            displayNames: ["关闭", "开启"],
             flags: [1, 0],
             kind: "cmll_kata_type"
         }),
         cmllBatchModeSelector: new Selector({
             names: ["off", "on"],
+            displayNames: ["关闭", "开启"],
             flags: [1, 0],
             kind: "cmll_batch_mode"
         }),
@@ -188,6 +197,7 @@ export const initialConfig : Config = (() => {
         }),
         hyperOriSelector: new Selector({
             names: ["off", "L/R", "F/B"],
+            displayNames: ["关闭", "L/R", "F/B"],
             flags: [1 ,0, 0],
             kind: "hyperori"
         }),
@@ -197,7 +207,7 @@ export const initialConfig : Config = (() => {
             kind: "ollcp_case"
         }),
         orientationSelector: new Selector({
-            label: "Color Scheme (U-F)",
+            label: "配色方案 (U-F)",
             names: [
                 "WG", "WB", "WO", "WR",
                 "YG", "YB", "YO", "YR",
@@ -216,51 +226,56 @@ export const initialConfig : Config = (() => {
         //     kind: "fb-strat"
         // }),
         fbBasisSelector: new Selector({
-            label: "Basis (piece considered solved) for FB. Default is L-center solved.",
+            label: "FB 判定基准。默认要求 L 中心已解决。",
             names: ["Default", "DL", "BL"],
+            displayNames: ["默认", "DL", "BL"],
             flags: [1, 0, 0],
             kind: "fb-basis"
         }),
         fbdrSelector: new Selector({
-            label: "Position of square",
+            label: "方块位置",
             names: ["FS at back", "FS at front", "Either"],
+            displayNames: ["FS 在后侧", "FS 在前侧", "任意"],
             flags: [1, 0, 0],
             kind: "fbdr"
         }),
         fbdrScrambleSelector: new Selector({
-            label: "Type of scramble",
+            label: "打乱类型",
             names: ["Short (Concerning FBDR Pieces only)", "Random State (Entire cube, useful for practicing F2B)"],
+            displayNames: ["短打乱 (仅涉及 FBDR 块)", "随机状态 (整颗魔方，适合练 F2B)"],
             flags: [1, 0],
             kind: "fbdr-scramble"
         }),
         fbOnlySelector: new Selector({
-            label: "Pieces to solve",
+            label: "要解决的块",
             names: ["FB Last Pair + DR", "FB Last Pair Only"],
+            displayNames: ["左桥最后角棱对 + 右底棱", "仅左桥最后角棱对"],
             flags: [0, 1],
             kind: "fb-only"
         }),
         fbPairSolvedSelector: new Selector({
-            label: "Last Pair pattern",
+            label: "最后角棱对模式",
             names: ["Random", "Solved"],
+            displayNames: ["随机", "已解决"],
             flags: [1, 0],
             kind: "fb-pair-solved"
         }),
         fbdrPosSelector1: new Selector({
-            label: "Position of FB edge",
+            label: "FB 边块位置",
             names: ["UF", "FU", "UL", "LU", "UB", "BU", "UR", "RU", "DF", "FD", "DB", "BD",
                     "DR", "RD", "BR", "RB", "FR", "RF"],
             flags: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             kind: "fbdr-position-1"
         }),
         fbdrPosSelector2: new Selector({
-            label: "Position of FB edge",
+            label: "FB 边块位置",
             names: ["UF", "FU", "UL", "LU", "UB", "BU", "UR", "RU", "DF", "FD", "DB", "BD",
                     "DR", "RD", "BR", "RB", "FR", "RF"],
             flags: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             kind: "fbdr-position-2"
         }),
         fbdrPosSelector3: new Selector({
-            label: "Position of DR",
+            label: "DR 位置",
             names: ["UF", "FU", "UL", "LU", "UB", "BU", "UR", "RU", "DF", "FD", "DB", "BD",
                     "DR", "RD", "BR", "RB", "FR", "RF"],
             flags: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -268,76 +283,85 @@ export const initialConfig : Config = (() => {
         }),
 
         fsSelector: new Selector({
-            label: "Position of square",
+            label: "方块位置",
             names: ["Front FS", "Back FS", "Both"],
+            displayNames: ["左前方形块", "左后方形块", "两者"],
             flags: [0, 0, 1],
             kind: "fs"
         }),
         ssSelector: new Selector({
-            label: "Square position",
+            label: "方块位置",
             names: ["Front SS", "Back SS", "Both"],
+            displayNames: ["前侧 SS", "后侧 SS", "两者"],
             flags: [1, 0, 0],
             kind: "ss"
         }),
         ssEOSelector: new Selector({
-            label: "Orientation of DR",
+            label: "DR 方向",
             names: ["Oriented", "Misoriented", "Either"],
+            displayNames: ["已定向", "未定向", "任意"],
             flags: [1, 0, 0],
             kind: "ss-orientation"
         }),
         ssPosSelector: new Selector({
-            label: "Position of DR",
+            label: "DR 位置",
             names: ["UF", "FU", "UL", "LU", "UB", "BU", "UR", "RU", "DF", "FD", "DB", "BD",
                     "DR", "RD", "BR", "RB", "FR", "RF"],
             flags: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             kind: "ss-position"
         }),
         ssPairOnlySelector: new Selector({
-            label: "Pieces to solve",
+            label: "要解决的块",
             names: ["SS", "DR fixed"],
+            displayNames: ["SS", "固定 DR"],
             flags: [1, 0],
             kind: "sb-pair-only"
         }),
         solutionNumSelector: new Selector({
-            label: "Number of solutions",
+            label: "解法数量",
             names: ["1", "3", "5", "10", "25", "100"],
             flags: [0, 0, 1, 0, 0, 0],
             kind: "solution-num"
         }),
         fbPieceSolvedSelector: new Selector({
-            label: "Difficulty",
+            label: "难度",
             names: ["Random", "DL Solved", "BL Solved", "Hard", "Hard over x2y (Scramble only)"],
+            displayNames: ["随机", "DL 已解决", "BL 已解决", "困难", "x2y 全困难 (仅打乱)"],
             annotation: fbPieceSolvedAnnotation,
             flags: [1, 0, 0, 0, 0],
             kind: "fb-piece-solved"
         }),
         fbssLpSelector: new Selector({
-            label: "FBLP Position",
+            label: "FBLP 位置",
             names: ["Front FBLP", "Back FBLP"],
+            displayNames: ["前侧 FBLP", "后侧 FBLP"],
             flags: [1, 0],
             kind: "fbss-lp"
         }),
         fbssSsSelector: new Selector({
-            label: "SS Position",
+            label: "SS 位置",
             names: ["Front SS", "Back SS" , "Both"],
+            displayNames: ["前侧 SS", "后侧 SS", "两者"],
             flags: [1, 0, 0],
             kind: "fbss-ss"
         }),
         lseMCSelector: new Selector({
-            label: "Center",
+            label: "中心",
             names: ["Aligned", "Misaligned"],
+            displayNames: ["已对齐", "未对齐"],
             flags: [0, 1],
             kind: "lse-mc"
         }),
         lseBarSelector: new Selector({
-            label: "EO Pair",
+            label: "EO 对",
             names: ["ULUR", "UFUB"],
             flags: [1, 0],
             kind: "lse-bar"
         }),
         lseStageSelector: new Selector({
-            label: "Stage",
+            label: "阶段",
             names: ["4b for MC(1 move EOPair insert)", "M2 to 4c", "4c"],
+            displayNames: ["MC 的 4b (1 步插入 EO pair)", "M2 到 4c", "4c"],
             flags: [0, 1, 0],
             kind: "lse-stage"
         }),
@@ -348,8 +372,9 @@ export const initialConfig : Config = (() => {
             kind: "lse-eo"
         }),
         lseEOLRMCSelector: new Selector({
-            label: "Center strategy",
+            label: "中心策略",
             names: [EOLRMode.NONMC_ONLY, EOLRMode.MC_ONLY, EOLRMode.COMBINED, EOLRMode.NONMC_SHORTER_ONLY, EOLRMode.MC_SHORTER_ONLY ],
+            displayNames: ["只显示 non-MC 解法", "只显示 MC 解法", "合并显示", "只显示 non-MC 最优的情况", "只显示 MC 最优的情况"],
             flags: [0, 0, 1, 0, 0],
             kind: "lse-eolrmc"
         }),
@@ -360,26 +385,30 @@ export const initialConfig : Config = (() => {
             kind: "lse-barbie"
         }),
         lseEOLRScrambleSelector: new Selector({
-            label: "Type of scramble",
+            label: "打乱类型",
             names: ["Short", "Random State"],
+            displayNames: ["短打乱", "随机状态"],
             flags: [0, 1],
             kind: "lse-eolr-scramble"
         }),
         obscureNonLRSelector: new Selector({
-            label: "Obscure Non-L/R",
+            label: "遮挡非 L/R 贴纸",
             names: ["Off", "On"],
+            displayNames: ["关闭", "开启"],
             flags: [1, 0],
             kind: "obscure-non-lr"
         }),
         obscureStickerWidthSelector: new Selector({
-            label: "Obscured Sticker Width",
+            label: "遮挡贴纸宽度",
             names: ["Thin", "Medium", "Thick"],
+            displayNames: ["细", "中", "粗"],
             flags: [0, 1, 0],
             kind: "obscure-sticker-width"
         }),
         obscureCornerMaskSelector: new Selector({
-            label: "Full Corner Masking",
+            label: "完整遮挡角块",
             names: ["Off", "On"],
+            displayNames: ["关闭", "开启"],
             flags: [1, 0],
             kind: "obscure-corner-mask"
         }),

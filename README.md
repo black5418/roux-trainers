@@ -1,80 +1,59 @@
-# Onionhoney's Roux Trainers
-- A trainer collection that caters to all your Roux training needs  ❤️
-- Inspired by http://cubegrass.appspot.com/, but with everything that it is missing.
+# Onionhoney 的 Roux 训练器
 
+- 一个覆盖 Roux 方法训练需求的魔方训练器集合。
+- 灵感来自 http://cubegrass.appspot.com/，并补上了它缺少的许多功能。
 
-## Modes supported
-- FB analyzer
-    - Solves for all x2y FBs, and suggests the best FB to start with!
-    - Other orientations supported too (CN, b/g x2y, etc.)
-- FB last slot (+ DR) trainer
-    - `HIGHLY USEFUL` if you're learning FB or FB + DR. Get a random scramble, think on your own, and check with our solutions!
-    - **Note**: while I try my best, the solver can still miss out on the best overall solution. So please, consult your human fellows when you're unsure, and always be careful with what you choose to learn.
-- FS/FB/SS trainer
-    - You can specify by piece positions. It seems these modes are pretty useful in providing new insights into blockbuilding  (for us dumb humans).
-- CMLL trainer
-    - Truly random scrambles so you can't tell the cases. You can specify different OCLLs. You can even start with a random SB last pair (to simulate how real recognition works)
-- LSE trainers (EOLR, 4c)
-    - Good for reviewing EOLR and practicing your 4c recognition method. You can filter by MC/Non-MC cases too.
+## 支持的模式
 
+- 左桥分析器
+  - 求解所有 x2y FB，并推荐最适合作为开局的 FB。
+  - 同时推荐最佳 FS / 伪 FS / Line 开局。
+  - 可以作为“你能找到 x 步解吗”的小测验显示，答案点击后揭晓。
+  - 支持更多朝向，例如 CN、蓝/绿 x2y、红/橙 x2y。
 
-## Functionalities
-- Scrambles are all random state. Solver is Roux-optimized with M and r moves as first-class citizens, with up to 25 different solutions provided.
+- 左桥最后角棱对 (+ 右底棱) 训练器
+  - 如果你正在练 FB 或 FB + DR，这个模式非常有用。拿一个随机打乱，先自己思考，再对照程序给出的解法。
+  - 注意：求解器会尽力寻找好解，但仍可能漏掉整体最优解。拿不准时请和真人玩家交流，谨慎选择要练习的解法。
 
-- You can control the virtual cube with keyboard (CStimer mapping). You can also drag on the cube to change its perspective.
+- 左桥 / 右桥方形块训练器
+  - 可以按块位置指定 case，适合用来观察和理解搭块。
 
-- You can bookmark your favorite cases and these will be saved in your browser.
+- CMLL (顶层角块) 训练器
+  - 使用真正随机的 L10P 打乱，因此不能靠打乱判断 case。
+  - 可以指定不同 OCLL，也可以从随机右桥最后角棱对开始，模拟真实识别。
+  - 可以只显示识别所需的贴纸。
 
-- You can input your own scrambles as a list and our trainer will drain them one by one!
+- LSE 训练器 (EOLR, 4c)
+  - 适合复习 EOLR 和练习 4c 识别方法。
+  - 可以按 MC / Non-MC case 过滤。
 
-- Appearance: dark mode enabled.
+## 功能
 
----
+- 打乱均为随机状态。求解器针对 Roux 优化，将 M 和 r 转动作为一等公民处理，最多提供 25 条不同解法。
+- 可以用键盘控制虚拟魔方，键位采用 cstimer 映射；也可以拖拽魔方改变观察角度。
+- 可以收藏喜欢的 case，收藏会保存在浏览器中。
+- 可以输入自己的打乱列表，训练器会按顺序逐条使用。
+- 外观支持暗色模式。
 
-## Version Log
-- (v1.0.0) All work prior to 12/02/2020, which I forgot to version log for.
-- (v1.0.1) 12/02/2020: Add edge position control for FB Last Pair trainer.
-- (v1.1) 12/15/2020: Reworked UI. App bar now features a dropdown menu for selecting the mode. Scramble occupies its own row. Solutions are shown side by side with the sim cube in large screen.
-- (v1.2) 12/17/2020: Add support for scramble input for all modes. Now you can paste in a list of scrambles, and the trainer will consume them one by one in order.
-- (v1.3) 12/20/2020: Solve Analysis Beta is online! It can do the following:
-    - For any random scramble, it'll recommend the best FB solutions over all orientations (e.g. x2y yellow/white).
-    - Given a solve reconstruction, it'll analyze each stage, and compare your solution there with the solver-suggested solutions.
-- (v1.4) 12/23/2020: Refine the appearance of the virtual cube and enable camera control with mouse dragging.
-- (v1.5) 2/18/2021: Introduced Tracking Trainer Beta.
-- (v1.6) 7/11/2021: You can train CMLL by case now. And by NMCLL case too if you want.
-    - We added a case selection menu to help you pick cases conveniently.
-    - We also let you select cases based on the L/R face shape, to assist users of NMCLL-based recognition methods. As usual, we're the first ever trainer to do so.
+## 快捷键
 
-- (v1.7) 10/3/2021:
-    - Add level selection on most modes. i.e. you can filter case by solution movecount now.
-    - Add FBLP + SS Trainer mode. I don't know, this might help solves of the future.
-    - Solver performance enhancements.
-    - Clarify wording for config options.
+- 空格：下一组打乱。
+- Enter：将虚拟魔方重置为当前打乱。
+- `/`：在 CMLL / OLLCP 模式下显示答案。
 
-- (v1.8) 09/01/2022: Minor fixes and functionality enhancements! (i'm back)
-    - Add a button so you can conveniently enter your solution as scramble input.
-    - Fixed up NMCMLL case alignment so the selected hyperorientation pattern will always show up in your chosen color.
-    - FB+DR trainer's solved pair mode now supports pairs at the back too.
-    - Added some experimental alg evaluators: a dynamic programming algorithm on grip position, and a piece movement counter. Won't be used in production yet.
+## 版本日志
 
-- (v2.0) 08/19/2023:
-    - Version 2 because I said so!
-        - Seriously though, V2 (hopefully) marks the beginning of a paradigm shift: let's move to a community-based contribution pattern so that changes are no longer solely driven by my personal motivations.
-    - Enter the FS+DR mode! Gives you a new way to look at block-building starts.
-    - In EOLR(b) mode, you can now train for EOdM if you'd like.
-    - Enhancement to mobile UI experience. (still ongoing)
-    - Tweaks to user settings (you can now toggle movecount hint, and generate up to 100 solutions)
-    - Enhancement to visual cube. (Press down keys {1,2,3,9,0} to peek at other faces without rotating)
+- v1.0.0：2020-12-02 前的全部初始工作。
+- v1.0.1：为 FB Last Pair 训练器加入边块位置控制。
+- v1.1：重做 UI，顶部栏支持下拉选择模式，打乱单独成行，大屏下解法和虚拟魔方并排显示。
+- v1.2：所有模式支持打乱输入，可以粘贴一组打乱并按顺序训练。
+- v1.3：Solve Analysis Beta 上线，可推荐各朝向最佳 FB 解法，并分析复盘中的各阶段。
+- v1.4：优化虚拟魔方外观，并支持鼠标拖拽控制视角。
+- v1.5：引入 Tracking Trainer Beta。
+- v1.6：支持按 CMLL / NMCLL case 训练，并加入 case 选择菜单。
+- v1.7：多数模式加入等级选择，新增 FBLP + SS 训练模式并优化求解器性能。
+- v1.8：加入把你的解法作为打乱输入的按钮，修复 NMCMLL 对齐，并加入实验性公式评估器。
+- v2.0：新增 FS + DR 模式，EOLR(b) 支持 EOdM，优化移动端体验和虚拟魔方。
+- v2.1：增强 x2y FB 分析器，加入 FS / 伪 FS / Line 分析和提示模式；重做 CMLL 训练器，加入 2D case 可视化和识别贴纸显示。
 
-- (v2.1) 06/09/2025:
-    - It's been a while! Brought to you by yours truly:
-    - x2y FB Analyzer just got better with a FS/Pseudo FS/Line analyzer!
-        - So you can train yourself to spot all the 'easy opening' patterns
-        - Also, I added a hint mode, where the solutions are presented as quizzes. Go quiz your friends!
-    - Revamped CMLL trainer
-        - Added 2D case visualizer
-        - **IMPORTANT**: you can now display only the stickers necessary for recognition! James Macdiarmid style is supported for now.
-
-=======
-
-If you have ideas on how to improve the app just shoot a message and let me know. <3
+有改进建议时，欢迎联系作者或提交贡献。

@@ -92,7 +92,7 @@ export function ScrambleInputView(props: { display: string, scrambles: string[],
                 className={classes.button}
                 startIcon={<EditIcon />}
             >
-                Input
+                输入
             </Button>
             : 
             <Button variant={editing ? "contained" : "outlined"}
@@ -126,7 +126,7 @@ export function ScrambleInputView(props: { display: string, scrambles: string[],
             onKeyUp={onKeyPress}
             /* onEntered={onEntered} */
             >
-          <DialogTitle> Input your own solution / scrambles (one per line) </DialogTitle>
+          <DialogTitle> 输入你的解法 / 打乱 (每行一条) </DialogTitle>
           <DialogContent>
                 <TextField
                     inputRef={textField}
@@ -148,10 +148,10 @@ export function ScrambleInputView(props: { display: string, scrambles: string[],
           <DialogActions>
               <Box padding={1}>
               <Button onClick={handleInvert} color="primary" variant="outlined" fullWidth >
-                  Use as solution
+                  作为解法使用
               </Button>
               <Button onClick={handleSubmit} color="primary" variant="outlined" fullWidth >
-                  Use as scramble
+                  作为打乱使用
               </Button>
               </Box>
           </DialogActions>

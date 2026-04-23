@@ -1,13 +1,15 @@
 export default class Selector {
     names: string[];
+    displayNames?: string[];
     flags: number[];
     kind: string;
     label?: string;
     annotation?: string;
 
-    constructor(config: {names: string[], flags: number[], kind: string, label?: string, annotation? : string}) {
-        const { names, flags, kind, label, annotation } = config
+    constructor(config: {names: string[], flags: number[], kind: string, label?: string, annotation? : string, displayNames?: string[]}) {
+        const { names, flags, kind, label, annotation, displayNames } = config
         this.names = names
+        this.displayNames = displayNames
         this.flags = flags
         this.kind = kind
         this.label = label
@@ -33,8 +35,16 @@ export default class Selector {
         return ""
     }
 
+    getDisplayName(name: string) {
+        const idx = this.names.indexOf(name)
+        if (idx >= 0 && this.displayNames && this.displayNames[idx]) {
+            return this.displayNames[idx]
+        }
+        return name
+    }
+
     setFlags(newFlags: number[]) {
-        const { names, kind, label } = this
-        return new Selector({names, flags: newFlags, kind, label})
+        const { names, kind, label, annotation, displayNames } = this
+        return new Selector({names, flags: newFlags, kind, label, annotation, displayNames})
     }
 }
