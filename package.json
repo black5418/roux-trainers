@@ -2,6 +2,9 @@
   "name": "cmll-trainer",
   "version": "1.7.0",
   "private": true,
+  "description": "Roux method Rubik's cube trainer with web and desktop entry points.",
+  "author": "Onionhoney",
+  "main": "desktop/main.js",
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
@@ -43,6 +46,10 @@
   "scripts": {
     "start": "react-app-rewired --openssl-legacy-provider start",
     "build": "react-app-rewired --openssl-legacy-provider build",
+    "build:desktop": "set PUBLIC_URL=.&& react-app-rewired --openssl-legacy-provider build",
+    "desktop": "npm run build:desktop && electron .",
+    "desktop:dev": "set ELECTRON_START_URL=http://localhost:3000/roux-trainers/&& electron .",
+    "dist:win": "npm run build:desktop && electron-builder --win portable",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start2": "react-app-rewired start",
@@ -68,9 +75,31 @@
   "homepage": "https://onionhoney.github.io/roux-trainers",
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "electron": "^30.5.1",
+    "electron-builder": "^24.13.3",
     "eslint": "^7.32.0",
     "gh-pages": "^2.2.0",
     "react-app-rewired": "^2.1.8",
     "react-refresh": "^0.8.3"
+  },
+  "build": {
+    "appId": "com.onionhoney.rouxtrainers",
+    "productName": "Roux 训练器",
+    "extraMetadata": {
+      "main": "desktop/main.js"
+    },
+    "files": [
+      "build/**/*",
+      "desktop/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ]
+    }
   }
 }
