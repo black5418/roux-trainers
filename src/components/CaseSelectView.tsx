@@ -70,9 +70,9 @@ function CaseSelectContent(props: { state: AppState, dispatch: React.Dispatch<Ac
       <Box marginBottom={3}>
         <ButtonGroup color="primary" style={{height: "2rem"}}>
           <Button onClick={handleSelectAll(1)}
-            startIcon={<CheckCircleIcon/>}>Select All</Button>
+            startIcon={<CheckCircleIcon/>}>全选</Button>
           <Button onClick={handleSelectAll(0)}
-            startIcon={<CancelIcon/>}>Deselect All</Button>
+            startIcon={<CancelIcon/>}>全不选</Button>
         </ButtonGroup>
       </Box>
       {groups.map((groupname, i) => (

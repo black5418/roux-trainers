@@ -173,11 +173,19 @@ function getMask(state: AppState) : Mask {
 
 function getHelperTextForMode(mode: Mode) {
   if (mode === "4c" || mode === "eopair") {
-    return ("Usage: Press space for next case. Enter to redo."
-      + "\n\nVirtual Cube: I/K (E/D) for M'/M, J/F for U/U'")
+    return ("用法：按空格进入下一例，按 Enter 重做当前例。"
+      + "\n\n虚拟魔方：I/K (E/D) 对应 M'/M，J/F 对应 U/U'")
   } else {
     return null
   }
+}
+
+function getSolverKindDisplayName(kind: string) {
+  const names: Record<string, string> = {
+    "fs-front": "左前方形块",
+    "fs-back": "左后方形块",
+  }
+  return names[kind] || kind
 }
 
 
@@ -189,9 +197,9 @@ function BlockTrainerView(props: { state: AppState, dispatch: React.Dispatch<Act
     let facelet = FaceletCube.from_cubie(cube, getMask(state))
 
     let desc : CaseDesc[] = state.case.desc.length ? state.case.desc :
-       [ { algs: [""], setup:"Press next for new case", id: "", kind: ""} ]
+       [ { algs: [""], setup:"点击下一例开始", id: "", kind: ""} ]
 
-    let spaceButtonText = (state.name === "hiding") ? "Reveal" : "Next"
+    let spaceButtonText = (state.name === "hiding") ? "显示答案" : "下一例"
     let showMoveCountHint = state.config.moveCountHint.getActiveName() === "Show"
 
     let describe_reveal = function(algs: CaseDesc[]) {
@@ -200,7 +208,7 @@ function BlockTrainerView(props: { state: AppState, dispatch: React.Dispatch<Act
         return get_algs(algs[0]).join("\n")
       } else {
         return algs.map( alg =>
-          `[${alg.kind}]:\n` + get_algs(alg).join("\n") + "\n"
+          `[${getSolverKindDisplayName(alg.kind)}]:\n` + get_algs(alg).join("\n") + "\n"
         )
       }
     }
@@ -210,14 +218,14 @@ function BlockTrainerView(props: { state: AppState, dispatch: React.Dispatch<Act
         d.algs.map(a => new MoveSeq(a).remove_setup().moves.length))
         .flat()
         .reduce( (a, b) => Math.min(a, b), 100 )
-      return `(Min = ${minMove} STM)`
+      return `(最少 = ${minMove} STM)`
     }
     let algText = (state.name === "hiding") ? (showMoveCountHint ? describe_hide(desc) : "")
       : (state.name === "revealed") ? describe_reveal(desc) : ""
 
     const handleSpace = () => {
       dispatch({type: "key", content: "#space"})
-      if (spaceButtonText === "Next") {
+      if (spaceButtonText === "下一例") {
         setFav(false)
       }
     }
@@ -229,7 +237,7 @@ function BlockTrainerView(props: { state: AppState, dispatch: React.Dispatch<Act
     // Add event listeners
     React.useEffect(() => {
       function downHandler(event: KeyboardEvent) {
-        if (event.key === " " && spaceButtonText === "Next") {
+        if (event.key === " " && spaceButtonText === "下一例") {
           setFav(false)
         }
         state.keyMapping.handle(event, dispatch);
@@ -259,12 +267,12 @@ function BlockTrainerView(props: { state: AppState, dispatch: React.Dispatch<Act
 
     const gt_sm = useMediaQuery(theme.breakpoints.up('sm'));
     const canvas_wh = (gt_sm) ? [400, 350] : [320, 280]
-    const ADD_STR = (gt_sm) ? "Add" : "";
+    const ADD_STR = (gt_sm) ? "收藏" : "";
 
     // helper-text
     let helperText = getHelperTextForMode(state.mode)
 
-    let levelSelectionWarning = "We weren't able to generate your level within time limit. You can try again -- some levels are reachable within a few tries."
+    let levelSelectionWarning = "未能在时间限制内生成符合该难度的 case。可以再试一次，有些等级需要多生成几次才会出现。"
     let levelSelectionSuccess = state.cube.levelSuccess
 
     const scramblePanel =
@@ -282,7 +290,7 @@ function BlockTrainerView(props: { state: AppState, dispatch: React.Dispatch<Act
                   onClick={handleFav}
                   startIcon={<FavoriteIcon/>}
                   >
-                  {favSelected ? "✓" : ADD_STR}
+                  {favSelected ? "已收藏" : ADD_STR}
               </Button>
               :
               null
@@ -306,7 +314,7 @@ function BlockTrainerView(props: { state: AppState, dispatch: React.Dispatch<Act
         <Box style={{display: "flex"}}>
           <Box style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <Box className={classes.title} style={{}}>
-              Scramble
+              打乱
             </Box>
           </Box>
           <Box style={{}} className={classes.fgap} />
@@ -330,7 +338,7 @@ function BlockTrainerView(props: { state: AppState, dispatch: React.Dispatch<Act
           <Box style={{display: "flex" }}>
             <Box display="flex" >
                 <Box style={{display: "flex", alignSelf: "flex-start"}}> <Box className={classes.title} style={{}}>
-                  Solutions
+                  解法
                 </Box> </Box>
             </Box>
             <Box style={{}} className={classes.fgap} />
@@ -428,8 +436,8 @@ function ConfigPanelGroup(props: {state: AppState, dispatch: React.Dispatch<Acti
     let DRManip = [
       // names: ["UF", "FU", "UL", "LU", "UB", "BU", "UR", "RU", "DF", "FD", "DB", "BD",
       // "DR", "RD", "BR", "RB", "FR", "RF"],
-      { name: "Toggle Select All", enableIdx: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
-      { name: "Toggle All Oriented", enableIdx: [0, 2, 4, 6, 8, 10, 12, 14, 16] },
+      { name: "切换全选", enableIdx: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
+      { name: "切换全部已定向", enableIdx: [0, 2, 4, 6, 8, 10, 12, 14, 16] },
     ]
     return (
       <Fragment>
@@ -468,7 +476,7 @@ function ConfigPanelGroup(props: {state: AppState, dispatch: React.Dispatch<Acti
     let select5 = "solutionNumSelector"
 
     let LPEdgeManip = [
-      { name: "Toggle Select All", enableIdx: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
+      { name: "切换全选", enableIdx: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
     ]
     let pos1 = "fbdrPosSelector1"
     let pos3 = "fbdrPosSelector3"

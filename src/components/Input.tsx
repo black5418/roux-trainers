@@ -29,7 +29,7 @@ export function ColorSetter(props: {state: AppState, dispatch: React.Dispatch<Ac
         <Fragment>
         <Box>
         <TextField
-            label="Color"
+            label="颜色"
             helperText="G,B,R,O,Y,W,Gray"
             onChange={handleChange}
             fullWidth
@@ -38,7 +38,7 @@ export function ColorSetter(props: {state: AppState, dispatch: React.Dispatch<Ac
 
         <Box>
         <Button variant="outlined" size="medium" color="primary" onClick={handleClick} >
-            Set color
+            设置颜色
         </Button>
         </Box>
         </Fragment>
@@ -60,15 +60,15 @@ export function ColorPanel(props: {state: AppState, dispatch: React.Dispatch<Act
     }
     return (
         <div className="color-panel">
-        <FormLabel component="legend">Orientation and Color Scheme</FormLabel>
+        <FormLabel component="legend">朝向与配色方案</FormLabel>
         <Box height={8}/>
         <Button color="primary" variant="outlined" style={{borderWidth: 2}} onClick={handleClickOpen}>
         <SettingsIcon fontSize="small" color="primary" style={{marginLeft: -6, marginRight: 3}}></SettingsIcon>
-          Edit
+          编辑
         </Button>
         <Box height={8}/>
         <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
-          <DialogTitle> Set Orientation (U-F) and Color Scheme  </DialogTitle>
+          <DialogTitle> 设置朝向 (U-F) 与配色方案 </DialogTitle>
           <DialogContent>
             {content}
             <Box height={20}/>
@@ -79,7 +79,7 @@ export function ColorPanel(props: {state: AppState, dispatch: React.Dispatch<Act
           </DialogContent>
           <DialogActions>
               <Button onClick={() => setOpen(false)} color="primary">
-                  Close
+                  关闭
               </Button>
           </DialogActions>
         </Dialog>

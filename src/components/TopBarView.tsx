@@ -82,7 +82,7 @@ function TopBarView(props: { value: number, onChange: (x: number) => void,
             <Box boxShadow={4} >
             <Toolbar className={classes.bar} >
             <Typography style={{wordWrap: "break-word", fontSize: "0.9rem", fontFamily: "Public Sans"}} >
-              {is_sm ? "Roux 🐱" : "Roux Trainer"}
+              {is_sm ? "Roux" : "Roux 训练器"}
             </Typography>
             <Box paddingX={is_sm ? 0: 0.5}/>
             <Box>

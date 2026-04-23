@@ -32,7 +32,7 @@ const makeDialog = <P extends object>(
     <Box height={8}/>
     <Button color="primary" variant="outlined" style={{borderWidth: 2}} onClick={handleClickOpen}>
       <SettingsIcon fontSize="small" color="primary" style={{marginLeft: -6, marginRight: 3}}></SettingsIcon>
-        {"SELECT"}
+        {"选择"}
     </Button>
     <Box height={8}/>
 
@@ -46,7 +46,7 @@ const makeDialog = <P extends object>(
       </DialogContent>
       <DialogActions>
           <Button onClick={handleClose} color="primary" size="large" >
-            {"CLOSE" }
+            {"关闭" }
           </Button>
       </DialogActions>
     </Dialog>

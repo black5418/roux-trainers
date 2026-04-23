@@ -85,8 +85,8 @@ function NMCLLSelect(props:  { state: AppState, dispatch: React.Dispatch<Action>
       }
     }
     },
-    title: "Select cases by NMCLL recog (this is a separate selection from above, only activated when you're in L/R or F/B mode)",
-    label: "Select by NMCLL"
+    title: "按 NMCLL 识别选择 case (这是独立于上方 CMLL 的选择，仅在 L/R 或 F/B 模式下生效)",
+    label: "按 NMCLL 选择"
   } }/>
 }
 
@@ -163,29 +163,29 @@ export function CmllTrainerView(props: { state: AppState, dispatch: React.Dispat
             }
           }
           },
-          label: "Select CMLL Cases"
+          label: "选择 CMLL Case"
         } }/>
 
-        <MultiSelect {...{state, dispatch, select: cmllaufSel, options: { label: "CMLL Auf", noDialog: true} }} />
+        <MultiSelect {...{state, dispatch, select: cmllaufSel, options: { label: "CMLL AUF", noDialog: true} }} />
         <Box width={16} display="inline-block"></Box>
-        <MultiSelect {...{state, dispatch, select: triggerSel, options: { label: "SB Last Pair Trigger (Uncheck all for pure CMLL)", noDialog: true} } } />
+        <MultiSelect {...{state, dispatch, select: triggerSel, options: { label: "SB 最后一组 pair trigger (全部取消即为纯 CMLL)", noDialog: true} } } />
 
         <Box height={10}/>
         <Divider />
         <Box height={20}/>
 
 
-        <SingleSelect {...{state, dispatch, select: cmllcubemaskSel, label: "Virtual Cube"}} />
+        <SingleSelect {...{state, dispatch, select: cmllcubemaskSel, label: "虚拟魔方"}} />
         <br/>
 
-        <SingleSelect {...{state, dispatch, select: _2d3dSel, label: "Visualize as" } } />
+        <SingleSelect {...{state, dispatch, select: _2d3dSel, label: "显示方式" } } />
         <Box width={16} display="inline-block"></Box>
 
-        {use3D     && <SingleSelect {...{state, dispatch, select: "cmll3DFaceSelector", label: "Show L face" } } />}
-        {useFlat3D && <SingleSelect {...{state, dispatch, select: "cmllflat3DFaceSelector", label: "L/R faces to reveal" } } />}
+        {use3D     && <SingleSelect {...{state, dispatch, select: "cmll3DFaceSelector", label: "显示 L 面" } } />}
+        {useFlat3D && <SingleSelect {...{state, dispatch, select: "cmllflat3DFaceSelector", label: "显示 L/R 面" } } />}
 
         <br/>
-        <SingleSelect {...{state, dispatch, select: kataSel, label: "Display recog stickers only" } } />
+        <SingleSelect {...{state, dispatch, select: kataSel, label: "仅显示识别贴纸" } } />
         <ColorPanel {...{state, dispatch}} />
 
         <Box height={20}/>
@@ -193,7 +193,7 @@ export function CmllTrainerView(props: { state: AppState, dispatch: React.Dispat
         <Box height={20}/>
 
         {/* <SingleSelect {...{state, dispatch, select: "cmllBatchModeSelector", label: "Batch Mode" } } /> */}
-        <SingleSelect {...{state, dispatch, select: hyperoriSel, label: "NMCLL Recog Mode" } } />
+        <SingleSelect {...{state, dispatch, select: hyperoriSel, label: "NMCLL 识别模式" } } />
         {hyperori !== "off" && <NMCLLSelect {...{state, dispatch}}/>}
 
       </Box>
@@ -298,7 +298,7 @@ export function CmllTrainerView(props: { state: AppState, dispatch: React.Dispat
       <Box display="flex">
               <Box>
               <Box className={classes.title} >
-                Scramble
+                打乱
               </Box> </Box>
       </Box>
       </Grid>
@@ -323,7 +323,7 @@ export function CmllTrainerView(props: { state: AppState, dispatch: React.Dispat
       <Grid item xs={3}>
       <Button onFocus={(evt) => evt.target.blur() } className={classes.button}
       size="medium" variant="outlined" color="primary" onClick={handleClick}> { /* className={classes.margin}>  */ }
-          Show
+          显示
       </Button>
       </Grid>
       :
@@ -356,7 +356,7 @@ export function CmllTrainerView(props: { state: AppState, dispatch: React.Dispat
         <Grid item xs={4} sm={4} md={3}>
           <Button onFocus={(evt) => evt.target.blur() } className={classes.button}
           size="medium" variant="contained" color="primary" onClick={handleNext}>
-              Next
+              下一例
           </Button>
         </Grid>
     </Grid>
@@ -375,7 +375,7 @@ export function CmllTrainerView(props: { state: AppState, dispatch: React.Dispat
     <Box>
     <FormControl component="fieldset" className={classes.prompt}>
       <FormLabel component="legend">
-         Usage: Press space for next case. Enter to redo. / to reveal.
+         用法：按空格进入下一例，按 Enter 重做当前例，按 / 显示答案。
       </FormLabel>
     </FormControl>
     </Box>
@@ -422,7 +422,7 @@ export function OllcpTrainerView(props: { state: AppState, dispatch: React.Dispa
           }
         }
         },
-        label: "Select OLLCP Cases"
+        label: "选择 OLLCP Case"
       } }/>
 
       {/* <MultiSelect {...{state, dispatch, select: cmllaufSel, options: { label: "CMLL Auf", noDialog: true} }} />
@@ -437,10 +437,10 @@ export function OllcpTrainerView(props: { state: AppState, dispatch: React.Dispa
       <SingleSelect {...{state, dispatch, select: cmllcubemaskSel, label: "Virtual Cube"}} />
       <br/> */}
 
-      <SingleSelect {...{state, dispatch, select: _2d3dSel, label: "Visualize as" } } />
+      <SingleSelect {...{state, dispatch, select: _2d3dSel, label: "显示方式" } } />
 
       <Box width={16} display="inline-block"></Box>
-      <SingleSelect {...{state, dispatch, select: kataSel, label: "Display recog stickers only" } } />
+      <SingleSelect {...{state, dispatch, select: kataSel, label: "仅显示识别贴纸" } } />
       <ColorPanel {...{state, dispatch}} />
 
       <Box height={20}/>
@@ -535,7 +535,7 @@ export function OllcpTrainerView(props: { state: AppState, dispatch: React.Dispa
     <Box display="flex">
             <Box>
             <Box className={classes.title} >
-              Scramble
+              打乱
             </Box> </Box>
     </Box>
     </Grid>
@@ -560,7 +560,7 @@ export function OllcpTrainerView(props: { state: AppState, dispatch: React.Dispa
     <Grid item xs={3}>
     <Button onFocus={(evt) => evt.target.blur() } className={classes.button}
     size="medium" variant="outlined" color="primary" onClick={handleClick}> { /* className={classes.margin}>  */ }
-        Show
+        显示
     </Button>
     </Grid>
     :
@@ -593,7 +593,7 @@ export function OllcpTrainerView(props: { state: AppState, dispatch: React.Dispa
       <Grid item xs={4} sm={4} md={3}>
         <Button onFocus={(evt) => evt.target.blur() } className={classes.button}
         size="medium" variant="contained" color="primary" onClick={handleNext}>
-            Next
+            下一例
         </Button>
       </Grid>
   </Grid>
@@ -612,7 +612,7 @@ export function OllcpTrainerView(props: { state: AppState, dispatch: React.Dispa
   <Box>
   <FormControl component="fieldset" className={classes.prompt}>
     <FormLabel component="legend">
-       Usage: Press space for next case. Enter to redo. / to reveal.
+       用法：按空格进入下一例，按 Enter 重做当前例，按 / 显示答案。
     </FormLabel>
   </FormControl>
   </Box>
